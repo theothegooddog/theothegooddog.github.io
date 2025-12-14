@@ -3,86 +3,93 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Penguins</title>
-  <style>* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
-  line-height: 1.5;
-}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.5;
+    }
 
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #0f172a;
-  padding: 12px 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-}
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #0f172a;
+      padding: 12px 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+    }
 
-button {
-  width: 300px;
-  height: 100px;
-  background-color: lightblue;
-  box-shadow: 0 5px 5px cyan;
-  border-radius: 10px;
-}
+    button {
+      width: 300px;
+      height: 100px;
+      background-color: lightblue;
+      box-shadow: 0 5px 5px cyan;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
 
-.topbar h1 {
-  color: white;
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
-}
+    .topbar h1 {
+      color: white;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+    }
 
-h2 {
-  padding: 24px;
-  text-align: center;
-  font-weight: 500;
-}
+    h2 {
+      padding: 24px;
+      text-align: center;
+      font-weight: 500;
+    }
 
-.alignright {
-  /* alignright is only supposed to be used for that one h6, but i guess you can use it for any text? */
-  text-align: right;
-}
+    .alignright {
+      text-align: right;
+      padding: 0 24px;
+    }
 
-.separator {
-  text-align: center;
-  padding: 40px 0;
-  letter-spacing: 0.2em;
-}
+    .separator {
+      text-align: center;
+      padding: 40px 0;
+      letter-spacing: 0.2em;
+    }
 
-.images {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
 
-.pimg {
-  height: 200px;
-  border: 1px solid #000;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #e5e7eb;
-}
+    .pimg {
+      height: 200px;
+      border: 1px solid #000;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #e5e7eb;
+      transition: 0.1s all ease-in-out;
+    }
 
-.pimg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-</style>
+    .pimg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pimg:hover {
+      transform: scale(1.15);
+    }
+  </style>
 </head>
 
 <body>
@@ -90,9 +97,10 @@ h2 {
     <h1>PENGUINS</h1>
   </div>
   <h2>This website is WORK-IN-PROGRESS. Please check weekly for updates.</h2>
-  <h6>website by theo!<h6>
-    <h6 class="alignright" alt="psst...     fatbird">fatbird</h6>
+  <h6>website by theo!</h6>
+  <h6 class="alignright">fatbird</h6>
   <h1 class="separator">— IMAGES —</h1>
+
   <div class="images">
     <div class="pimg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYvNBg6gzHo1OFYSoMAnvmeXZbxXIdi223eexiHyOb3Hhz9cYrJYOUEetXLg&s" alt="Penguin"></div>
     <div class="pimg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQob0srjUKq4fUeirtVfpCBpvC3ru-AlKEIQaFTbADMhLx4Se0xmmiJxWjUMQg&s" alt="Penguin"></div>
@@ -104,7 +112,9 @@ h2 {
     <div class="pimg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSekVPaS4l2ZIxG843WVe-k_aSLvvRknREeT_TtJkwzdn1Vh-n8FuF_6NwLcA&s" alt="Penguin"></div>
     <div class="pimg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPL586by1XSHGbWkfm9G-ohmnAg-FKD4qj6EUdimfP6iD4xvdwVB6rnFe79MQ&s" alt="Penguin"></div>
   </div>
-  <button onclick="alert('penguin')">penguin</button>
+  <div style="text-align:center; padding: 40px;">
+    <button onclick="alert('penguin')">penguin</button>
+  </div>
 </body>
 
 </html>
