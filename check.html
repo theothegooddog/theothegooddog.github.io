@@ -1,0 +1,22 @@
+Url <input id="url">
+<button id="check">Check it!</button>
+
+<script>
+document.getElementById("check").onclick = async () => {
+    const input = document.getElementById("url");
+    const value = input.value;
+
+    try {
+        const a = await fetch(value).then(r => r.text());
+        const b = await fetch("https://pastebin.com/raw/RJihbwfz").then(r => r.text());
+
+        if (a === b) {
+            console.log("yes yes");
+        } else {
+            console.log("nope");
+        }
+    } catch (e) {
+        console.error("Fetch failed:", e);
+    }
+};
+</script>
