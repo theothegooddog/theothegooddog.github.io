@@ -1,0 +1,31 @@
+<script>
+function italicizeFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q");
+  if (!q) return;
+
+  let result = "";
+
+  for (const ch of q) {
+    const code = ch.charCodeAt(0);
+
+    // Uppercase A-Z
+    if (code >= 65 && code <= 90) {
+      result += String.fromCodePoint(0x1D400 + (code - 65));
+    }
+    // Lowercase a-z
+    else if (code >= 97 && code <= 122) {
+      result += String.fromCodePoint(0x1D41A + (code - 97));
+    }
+    // Other characters
+    else {
+      result += ch;
+    }
+  }
+
+  // Replace the website's content
+  document.documentElement.innerHTML = result;
+}
+
+italicizeFromQuery();
+</script>
