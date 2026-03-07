@@ -1,158 +1,235 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Movie Status</title>
-  <style>
-    body{
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #aaa;
-      text-align: center;
-      margin: 0;
-      padding: 2rem;
+<title>Movie Status</title>
 
-      background:
-  linear-gradient(45deg,#1a1a1a 25%,transparent 25%),
-  linear-gradient(-45deg,#1a1a1a 25%,transparent 25%),
-  linear-gradient(45deg,transparent 75%,#1a1a1a 75%),
-  linear-gradient(-45deg,transparent 75%,#1a1a1a 75%),
-  #0e0e0e; /* 👈 base color */
-      background-size: 40px 40px;
-      background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+<style>
 
-      animation: scrollBG 10s linear infinite;
-    }
+body{
+font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+color:#aaa;
+text-align:center;
+margin:0;
+padding:5rem 2rem 2rem 2rem;
 
-    @keyframes scrollBG{
-      to{
-        background-position:
-          80px 80px,
-          80px 100px,
-          100px 60px,
-          60px 80px;
-      }
-    }
+background:
+linear-gradient(45deg,#1a1a1a 25%,transparent 25%),
+linear-gradient(-45deg,#1a1a1a 25%,transparent 25%),
+linear-gradient(45deg,transparent 75%,#1a1a1a 75%),
+linear-gradient(-45deg,transparent 75%,#1a1a1a 75%),
+#0e0e0e;
 
-    h1{
-      font-size: 2.5rem;
-      color: #6ee7ff;
-      margin-bottom: .5rem;
-    }
+background-size:40px 40px;
+background-position:0 0,0 20px,20px -20px,-20px 0;
+animation:scrollBG 10s linear infinite;
+}
 
-    h2{
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      font-size: 1.5rem;
-      margin: .5rem 0;
-    }
+@keyframes scrollBG{
+to{
+background-position:
+80px 80px,
+80px 100px,
+100px 60px,
+60px 80px;
+}
+}
 
-    h3{
-      font-weight: 400;
-      margin: .25rem 0;
-    }
+/* TOPBAR */
 
-    h6{
-      margin-top: 2rem;
-      opacity: .6;
-      font-weight: 400;
-    }
+.topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:60px;
+background:#111;
+border-bottom:1px solid #333;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+box-sizing:border-box;
+z-index:100;
+}
 
-    .dot{
-      width: 10px;
-      height: 10px;
-      background: red;
-      border-radius: 50%;
-      box-shadow: 0 0 8px red;
-      animation: blink 1s steps(1) infinite;
-    }
+.topbar h1{
+font-size:1.2rem;
+margin:0;
+color:#6ee7ff;
+}
 
-    @keyframes blink{
-      50%{ opacity: 0; }
-    }
+.nav{
+display:flex;
+gap:20px;
+}
 
-    .description{
-      max-width: 500px;
-      margin: 1rem auto;
-      line-height: 1.4;
-      opacity: .9;
-    }
+.nav a{
+color:#aaa;
+text-decoration:none;
+font-weight:600;
+transition:.15s;
+}
 
-    /* ===== Join Button ===== */
-    .join-btn{
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: .75rem 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #111;
-      background: #dddddd;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 0 #aaaaaa;
-      transition: transform .1s, box-shadow .1s, filter .1s;
-    }
+.nav a:hover{
+color:#fff;
+}
 
-    .join-btn:hover{
-      filter: brightness(1.1);
-    }
+/* HEADERS */
 
-    .join-btn:active{
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #111;
-    }
+h1{
+font-size:2.5rem;
+color:#6ee7ff;
+margin-bottom:.5rem;
+}
 
-    .apply-btn{
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: .75rem 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #111;
-      background: #4ade80;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 0 #16a34a;
-      transition: transform .1s, box-shadow .1s, filter .1s;
-    }
+h2{
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+font-size:1.5rem;
+margin:.5rem 0;
+}
 
-    .apply-btn:hover{
-      filter: brightness(1.1);
-    }
+h3{
+font-weight:400;
+margin:.25rem 0;
+}
 
-    .apply-btn:active{
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #16a34a;
-    }
-  </style>
+h6{
+margin-top:2rem;
+opacity:.6;
+font-weight:400;
+}
+
+/* STATUS DOT */
+
+.dot{
+width:10px;
+height:10px;
+background:red;
+border-radius:50%;
+box-shadow:0 0 8px red;
+animation:blink 1s steps(1) infinite;
+}
+
+@keyframes blink{
+50%{opacity:0}
+}
+
+/* DESCRIPTION */
+
+.description{
+max-width:500px;
+margin:1rem auto;
+line-height:1.4;
+opacity:.9;
+}
+
+/* BUTTONS */
+
+.join-btn{
+display:inline-block;
+margin-top:1.5rem;
+padding:.75rem 1.5rem;
+font-size:1.1rem;
+font-weight:600;
+color:#111;
+background:#ddd;
+border-radius:8px;
+text-decoration:none;
+box-shadow:0 4px 0 #aaa;
+transition:.1s;
+}
+
+.join-btn:hover{filter:brightness(1.1)}
+
+.join-btn:active{
+transform:translateY(4px);
+box-shadow:0 0 0 #111;
+}
+
+.apply-btn{
+display:inline-block;
+margin-top:1.5rem;
+padding:.75rem 1.5rem;
+font-size:1.1rem;
+font-weight:600;
+color:#111;
+background:#4ade80;
+border-radius:8px;
+text-decoration:none;
+box-shadow:0 4px 0 #16a34a;
+transition:.1s;
+}
+
+.apply-btn:hover{filter:brightness(1.1)}
+
+.apply-btn:active{
+transform:translateY(4px);
+box-shadow:0 0 0 #16a34a;
+}
+
+</style>
 </head>
+
 <body>
-  <main>
-    <div class="top">
-    <h1>Minecraft Movie webpage!!!</h1>
 
-  <h2>
-    Current movie: Bedwars
-    <span class="dot"></span>
-  </h2>
+<!-- TOPBAR -->
 
-  <h3>Directors: Max and Theo</h3>
+<div class="topbar">
+<h1>Minecraft Movie</h1>
 
-  <h3 class="description">
-    Bedwars is a movie about war. Idk what else to add -max
-  </h3>
-    </div>
+<div class="nav">
+<a href="/">Home</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/status">Status</a>
+</div>
+</div>
 
-  <!-- JOIN BUTTON -->
-  <button class="join-btn" href="/status" target="_blank">
-    Join the Realm
-  </button>
+<main>
 
-  <div class="crew"><h2>Meet The Crew!</h2>
-  <h3>So far, we have:</h3>
-  <h3 class="join-btn">Theo</h3><h3 class="join-btn">Max</h3><h3 class="join-btn">Lucas Y</h3><h3 class="join-btn">Amber</h3><h3 class="join-btn">Alexander</h3><h3 class="join-btn">Andrew</h3>
-  <div><a class="apply-btn"href="https://docs.google.com/forms/d/e/1FAIpQLScGYEQ8LgdhgWQWCAnXlcOYS1lgJPVROG2v6DYUZ-8KyUFlAQ/viewform?usp=dialog"target="_blank">Apply for the crew</a></div>
-  </div>
-  <h6>(website by theo, hosted by <a href="https://github.com/">Github</a>)</h6>
-  </main>
+<div class="top">
+<h1>Minecraft Movie webpage!!!</h1>
+
+<h2>
+Current movie: Bedwars
+<span class="dot"></span>
+</h2>
+
+<h3>Directors: Max and Theo</h3>
+
+<h3 class="description">
+Bedwars is a movie about war. Idk what else to add -max
+</h3>
+</div>
+
+<a class="join-btn" href="/status" target="_blank">
+Join the Realm
+</a>
+
+<div class="crew">
+<h2>Meet The Crew!</h2>
+
+<h3>So far, we have:</h3>
+
+<h3 class="join-btn">Theo</h3>
+<h3 class="join-btn">Max</h3>
+<h3 class="join-btn">Lucas Y</h3>
+<h3 class="join-btn">Amber</h3>
+<h3 class="join-btn">Alexander</h3>
+<h3 class="join-btn">Andrew</h3>
+
+<div>
+<a class="apply-btn"
+href="https://docs.google.com/forms/d/e/1FAIpQLScGYEQ8LgdhgWQWCAnXlcOYS1lgJPVROG2v6DYUZ-8KyUFlAQ/viewform?usp=dialog"
+target="_blank">
+Apply for the crew
+</a>
+</div>
+</div>
+
+<h6>(website by theo, hosted by <a href="https://github.com/">Github</a>)</h6>
+
+</main>
 </body>
 </html>
