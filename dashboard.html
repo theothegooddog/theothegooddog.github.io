@@ -14,6 +14,26 @@ margin:0;
 padding:3rem;
 }
 
+.login{
+margin-top:20vh;
+}
+
+input{
+padding:.6rem;
+font-size:1rem;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:.6rem 1rem;
+border:none;
+border-radius:6px;
+background:#6ee7ff;
+font-weight:600;
+cursor:pointer;
+}
+
 .panel{
 background:#181818;
 padding:20px;
@@ -22,10 +42,13 @@ max-width:600px;
 margin:20px auto;
 }
 
+#dashboard{
+display:none;
+}
+
 #countdown{
 font-size:2rem;
 color:#6ee7ff;
-margin:10px 0;
 }
 
 li{
@@ -33,17 +56,38 @@ list-style:none;
 padding:6px;
 }
 
+#error{
+color:red;
+margin-top:10px;
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- LOGIN -->
+
+<div id="login" class="login">
+
+<h1>Dashboard Login</h1>
+
+<input id="pw" type="password" placeholder="Password">
+<button onclick="login()">Enter</button>
+
+<div id="error"></div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
 
 <h1>Movie Dashboard</h1>
 
 <div class="panel">
 
 <h2>Next Meeting In</h2>
-
 <div id="countdown">Loading...</div>
 
 </div>
@@ -51,12 +95,34 @@ padding:6px;
 <div class="panel">
 
 <h2>Upcoming Meetings</h2>
-
 <ul id="meetingList"></ul>
 
 </div>
 
+</div>
+
 <script>
+
+const PASSWORD="112563"
+
+function login(){
+
+let input=document.getElementById("pw").value
+
+if(input===PASSWORD){
+
+document.getElementById("login").style.display="none"
+document.getElementById("dashboard").style.display="block"
+
+loadMeetings()
+
+}else{
+
+document.getElementById("error").textContent="Wrong password"
+
+}
+
+}
 
 let meetings=[]
 let nextMeeting=null
@@ -67,31 +133,26 @@ let res=await fetch("/times.json")
 let data=await res.json()
 
 meetings=data.meetings.map(t=>new Date(t))
-
 meetings.sort((a,b)=>a-b)
 
 let now=new Date()
-
 nextMeeting=meetings.find(m=>m>now)
 
 renderList()
+
+setInterval(updateCountdown,1000)
 
 }
 
 function renderList(){
 
 let list=document.getElementById("meetingList")
-
 list.innerHTML=""
 
 meetings.forEach(m=>{
-
 let li=document.createElement("li")
-
 li.textContent=m.toLocaleString()
-
 list.appendChild(li)
-
 })
 
 }
@@ -101,10 +162,9 @@ function updateCountdown(){
 if(!nextMeeting)return
 
 let now=new Date()
-
 let diff=nextMeeting-now
 
-if(diff<0){
+if(diff<=0){
 document.getElementById("countdown").textContent="Meeting happening now!"
 return
 }
@@ -118,10 +178,6 @@ document.getElementById("countdown").textContent=
 `${d}d ${h}h ${m}m ${s}s`
 
 }
-
-loadMeetings()
-
-setInterval(updateCountdown,1000)
 
 </script>
 
