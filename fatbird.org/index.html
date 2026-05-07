@@ -6,6 +6,27 @@
     <title>fatbird.org</title>
 
     <link rel="stylesheet" href="style.css">
+    <script>
+        let current = 1;
+        const total = 5;
+        
+        function showSlide(n) {
+            if (n > total) current = 1;
+            else if (n < 1) current = total;
+            else current = n;
+        
+            document.getElementById("fanart-slide").src =
+                `fanart${current}.jpeg`;
+        }
+        
+        function nextSlide() {
+            showSlide(current + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(current - 1);
+        }
+    </script>
 </head>
 <body>
     
