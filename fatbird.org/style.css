@@ -107,3 +107,37 @@ main {
     margin-bottom: 10px;
     color: var(--accent);
 }
+
+.slideshow {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.slideshow img {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.controls button {
+    background: var(--button);
+    color: var(--text);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background: var(--button-hover);
+}
