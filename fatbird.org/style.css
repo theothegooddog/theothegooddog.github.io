@@ -1,5 +1,24 @@
 /* style.css */
 
+:root {
+    /* ===== COLOR SCHEME ===== */
+
+    --bg: #121212;
+    --topbar: #1e1e1e;
+    --card: #1d1d1d;
+
+    --border: #69b9ff;
+
+    --text: #ffffff;
+    --subtext: #bbbbbb;
+
+    --accent: #5fb0f8;
+    --button: #2d2d2d;
+    --button-hover: #444444;
+
+    /* ======================== */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,13 +27,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #121212;
-    color: white;
+    background: var(--bg);
+    color: var(--text);
 }
 
 .topbar {
     width: 100%;
-    background: #1e1e1e;
+    background: var(--topbar);
     padding: 15px 25px;
 
     display: flex;
@@ -24,13 +43,13 @@ body {
     position: sticky;
     top: 0;
 
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid var(--border);
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ffd54a;
+    color: var(--accent);
 }
 
 .nav-buttons {
@@ -39,8 +58,8 @@ body {
 }
 
 .nav-buttons button {
-    background: #2d2d2d;
-    color: white;
+    background: var(--button);
+    color: var(--text);
 
     border: none;
     padding: 10px 16px;
@@ -52,7 +71,7 @@ body {
 }
 
 .nav-buttons button:hover {
-    background: #444;
+    background: var(--button-hover);
     transform: translateY(-2px);
 }
 
@@ -71,20 +90,20 @@ main {
 }
 
 #hero p {
-    color: #bbb;
+    color: var(--subtext);
     font-size: 1.2rem;
 }
 
 .card {
-    background: #1d1d1d;
+    background: var(--card);
     padding: 25px;
     margin-top: 25px;
 
     border-radius: 12px;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
 }
 
 .card h2 {
     margin-bottom: 10px;
-    color: #ffd54a;
+    color: var(--accent);
 }
