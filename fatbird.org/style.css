@@ -141,3 +141,9 @@ main {
 .controls button:hover {
     background: var(--button-hover);
 }
+
+.counter {
+    margin-top: 8px;
+    color: var(--subtext);
+    font-size: 0.9rem;
+}
