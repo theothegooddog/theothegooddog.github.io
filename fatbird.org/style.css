@@ -147,3 +147,29 @@ main {
     color: var(--subtext);
     font-size: 0.9rem;
 }
+
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.person {
+    background: #ffffff;
+    padding: 20px;
+    width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.role {
+    color: #666;
+    font-size: 14px;
+}
