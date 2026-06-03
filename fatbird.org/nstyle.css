@@ -108,6 +108,11 @@ main {
     color: var(--accent);
 }
 
+.blog .date {
+    margin-bottom: 10px;
+    color: var(--accent);
+    
+}
 
 .blog p {
     color: var(--subtext);
