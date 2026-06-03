@@ -1,0 +1,115 @@
+/* style.css */
+
+:root {
+    /* ===== COLOR SCHEME ===== */
+
+    --bg: #000000;
+    --topbar: #488bc6;
+    --card: #003f94;
+
+    --border: #69b9ff;
+
+    --text: #000000;
+    --subtext: #aaaaaa; /* AAAAAA- */
+
+    --accent: #5fb0f8;
+    --button: #88e0ff;
+    --button-hover: #ffffff;
+
+    /* ======================== */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.topbar {
+    width: 100%;
+    background: var(--topbar);
+    padding: 15px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+
+    border-bottom: 2px solid var(--border);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--button);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    background: var(--button);
+    color: var(--text);
+
+    border: none;
+    padding: 10px 16px;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-buttons button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+main {
+    padding: 40px;
+}
+
+#hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+#hero p {
+    color: var(--subtext);
+    font-size: 1.2rem;
+}
+
+.blog {
+    background: var(--card);
+    padding: 25px;
+    margin-top: 25px;
+
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.blog .title {
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+
+.blog p {
+    color: var(--subtext);
+    font-size: 1.2rem;
+}
