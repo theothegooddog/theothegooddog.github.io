@@ -1,0 +1,279 @@
+<title>Flow Field — Study No. 12</title>
+<style>
+  :root {
+    --bg: #06060a;
+    --line-cool: 200, 210, 224;
+    --accent: 255, 122, 69;
+    --ink: #d9d6cd;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  .stage {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+  }
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 82%, rgba(0,0,0,0.35) 100%);
+  }
+
+  .plate {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 22px 26px;
+    pointer-events: none;
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  }
+
+  .plate .title {
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    opacity: 0.42;
+  }
+
+  .plate .meta {
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.32;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 560px) {
+    .plate { padding: 16px 18px; }
+    .plate .title { font-size: 12px; }
+    .plate .meta { font-size: 9px; }
+  }
+</style>
+
+<div class="stage">
+  <canvas id="field"></canvas>
+  <div class="vignette"></div>
+  <div class="plate">
+    <div class="title">Flow Field — Study No. 12</div>
+    <div class="meta" id="meta">SEED 0451 · N 900</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var canvas = document.getElementById("field");
+  var ctx = canvas.getContext("2d");
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- seeded PRNG + gradient noise (deterministic, no deps) ----
+  var SEED = 451;
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var rand = mulberry32(SEED);
+
+  var perm = new Uint8Array(512);
+  (function buildPermutation() {
+    var p = new Uint8Array(256);
+    for (var i = 0; i < 256; i++) p[i] = i;
+    for (var i = 255; i > 0; i--) {
+      var j = Math.floor(rand() * (i + 1));
+      var tmp = p[i]; p[i] = p[j]; p[j] = tmp;
+    }
+    for (var i = 0; i < 512; i++) perm[i] = p[i & 255];
+  })();
+
+  function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+  function lerp(a, b, t) { return a + t * (b - a); }
+  function grad(hash, x, y) {
+    var h = hash & 7;
+    var u = h < 4 ? x : y;
+    var v = h < 4 ? y : x;
+    return ((h & 1) ? -u : u) + ((h & 2) ? -2 * v : 2 * v);
+  }
+  function noise2D(x, y) {
+    var X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
+    x -= Math.floor(x); y -= Math.floor(y);
+    var u = fade(x), v = fade(y);
+    var aa = perm[perm[X] + Y], ab = perm[perm[X] + Y + 1];
+    var ba = perm[perm[X + 1] + Y], bb = perm[perm[X + 1] + Y + 1];
+    var x1 = lerp(grad(aa, x, y), grad(ba, x - 1, y), u);
+    var x2 = lerp(grad(ab, x, y - 1), grad(bb, x - 1, y - 1), u);
+    return lerp(x1, x2, v) * 0.5;
+  }
+
+  // ---- canvas sizing ----
+  var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.fillStyle = "#06060a";
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // ---- particles ----
+  var COUNT = Math.max(360, Math.min(1100, Math.round((window.innerWidth * window.innerHeight) / 1600)));
+  var SCALE = 0.0026;
+  var SPEED = 1.15;
+  var MAX_AGE_MIN = 220, MAX_AGE_MAX = 520;
+  var particles = [];
+
+  function spawn(p, atEdge) {
+    if (atEdge) {
+      var side = Math.floor(rand() * 4);
+      if (side === 0) { p.x = rand() * W; p.y = -10; }
+      else if (side === 1) { p.x = W + 10; p.y = rand() * H; }
+      else if (side === 2) { p.x = rand() * W; p.y = H + 10; }
+      else { p.x = -10; p.y = rand() * H; }
+    } else {
+      p.x = rand() * W;
+      p.y = rand() * H;
+    }
+    p.age = 0;
+    p.maxAge = MAX_AGE_MIN + rand() * (MAX_AGE_MAX - MAX_AGE_MIN);
+    p.accent = rand() < 0.07;
+    p.hueJitter = rand();
+    p.justReset = true;
+  }
+
+  function initParticles() {
+    particles = [];
+    for (var i = 0; i < COUNT; i++) {
+      var p = { x: 0, y: 0, age: 0, maxAge: 0, accent: false, hueJitter: 0, justReset: true };
+      spawn(p, false);
+      p.age = rand() * p.maxAge; // stagger lifecycles
+      particles.push(p);
+    }
+  }
+
+  // ---- pointer influence (gentle vortex) ----
+  var mouse = { x: -9999, y: -9999, active: 0 };
+  window.addEventListener("pointermove", function (e) {
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = 1;
+  }, { passive: true });
+  window.addEventListener("pointerleave", function () { mouse.active = 0; });
+
+  var t = 0;
+
+  function step(drawTrail) {
+    t += 0.0016;
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var n = noise2D(p.x * SCALE, p.y * SCALE + t * 40);
+      var angle = n * Math.PI * 4 + t * 0.6;
+
+      if (mouse.active > 0.01) {
+        var dx = p.x - mouse.x, dy = p.y - mouse.y;
+        var dist2 = dx * dx + dy * dy;
+        var radius = 220;
+        if (dist2 < radius * radius) {
+          var d = Math.sqrt(dist2) + 0.001;
+          var falloff = 1 - d / radius;
+          var swirl = Math.atan2(dy, dx) + Math.PI / 2;
+          angle = lerp(angle, swirl, falloff * 0.85);
+        }
+      }
+
+      var ox = p.x, oy = p.y;
+      p.x += Math.cos(angle) * SPEED;
+      p.y += Math.sin(angle) * SPEED;
+      p.age++;
+
+      if (drawTrail && !p.justReset) {
+        var lifeRatio = 1 - Math.abs(p.age / p.maxAge - 0.5) * 2;
+        var alpha = Math.max(0, lifeRatio) * 0.55;
+        if (p.accent) {
+          ctx.strokeStyle = "rgba(" + 255 + "," + Math.round(122 + p.hueJitter * 30) + "," + Math.round(69 + p.hueJitter * 40) + "," + (alpha * 0.9) + ")";
+        } else {
+          var c = 200 + p.hueJitter * 24;
+          ctx.strokeStyle = "rgba(" + Math.round(c) + "," + Math.round(c + 8) + "," + Math.round(c + 16) + "," + alpha + ")";
+        }
+        ctx.lineWidth = p.accent ? 1.1 : 0.75;
+        ctx.beginPath();
+        ctx.moveTo(ox, oy);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+      p.justReset = false;
+
+      if (p.age > p.maxAge || p.x < -20 || p.x > W + 20 || p.y < -20 || p.y > H + 20) {
+        spawn(p, true);
+      }
+    }
+    mouse.active *= 0.985;
+  }
+
+  var rafId = null;
+  function loop() {
+    ctx.fillStyle = "rgba(6, 6, 10, 0.065)";
+    ctx.fillRect(0, 0, W, H);
+    step(true);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function renderStatic() {
+    ctx.fillStyle = "#06060a";
+    ctx.fillRect(0, 0, W, H);
+    for (var i = 0; i < 260; i++) step(true);
+  }
+
+  function start() {
+    resize();
+    initParticles();
+    document.getElementById("meta").textContent = "SEED " + SEED + " · N " + COUNT;
+    if (reduceMotion) {
+      renderStatic();
+    } else {
+      if (rafId) cancelAnimationFrame(rafId);
+      loop();
+    }
+  }
+
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(start, 180);
+  });
+
+  start();
+})();
+</script>
