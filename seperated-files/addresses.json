@@ -1,7 +1,7 @@
 {
-    "test.txt": [
-        "https://theothegooddog.github.io/seperated-files/test.txt1",
-    	"https://theothegooddog.github.io/seperated-files/test.txt2",
-        "https://theothegooddog.github.io/seperated-files/test.txt3"
+    "text.txt": [
+        "https://theothegooddog.github.io/seperated-files/text.txt1",
+    	"https://theothegooddog.github.io/seperated-files/text.txt2",
+        "https://theothegooddog.github.io/seperated-files/text.txt3"
     ]
 }
