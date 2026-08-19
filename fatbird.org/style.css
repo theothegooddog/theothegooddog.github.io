@@ -75,6 +75,47 @@ body {
     transform: translateY(-2px);
 }
 
+.menu-toggle {
+    display: none;
+    background: var(--button);
+    color: var(--text);
+
+    border: none;
+    padding: 10px 14px;
+    font-size: 1.2rem;
+
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-buttons {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+
+        flex-direction: column;
+        background: var(--topbar);
+        padding: 10px 25px 15px;
+
+        border-bottom: 2px solid var(--border);
+    }
+
+    .nav-buttons.open {
+        display: flex;
+    }
+
+    .nav-buttons button {
+        width: 100%;
+    }
+}
+
 main {
     padding: 40px;
 }
