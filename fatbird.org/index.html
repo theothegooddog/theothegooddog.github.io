@@ -34,8 +34,40 @@
             showSlide(current - 1);
         }
         
+        // fatbird 3 preview slideshow
+        let previewCurrent = 1;
+        const previewTotal = 4;
+        const previewPages = ["cover", "page1", "page2", "page3"];
+
+        function updatePreviewSlide() {
+            document.getElementById("preview-slide").src =
+                `fatbird3/${previewPages[previewCurrent - 1]}.png`;
+
+            document.getElementById("preview-counter").textContent =
+                `${previewCurrent} / ${previewTotal}`;
+        }
+
+        function showPreviewSlide(n) {
+            if (n > previewTotal) previewCurrent = 1;
+            else if (n < 1) previewCurrent = previewTotal;
+            else previewCurrent = n;
+
+            updatePreviewSlide();
+        }
+
+        function nextPreviewSlide() {
+            showPreviewSlide(previewCurrent + 1);
+        }
+
+        function prevPreviewSlide() {
+            showPreviewSlide(previewCurrent - 1);
+        }
+
         // init
-        updateSlide();
+        window.addEventListener("DOMContentLoaded", () => {
+            updateSlide();
+            updatePreviewSlide();
+        });
     </script>
 </head>
 <body>
@@ -55,6 +87,7 @@
 
         <nav class="nav-buttons">
             <button onclick="location.href='#'">Home</button>
+            <button onclick="location.href='#preview'">Fatbird 3</button>
             <button onclick="location.href='#fanart'">Fanart</button>
             <button onclick="location.href='#info'">Info</button>
             <button onclick="location.href='#people'">People</button>
@@ -67,6 +100,28 @@
         <section id="hero">
             <h1>Welcome to fatbird.org</h1>
             <p>The official home of Fatbird.</p>
+        </section>
+
+        <section id="newest-news" class="card">
+            <h2>Newest news</h2>
+            <div class="news-item">
+                <h3 class="title">Fatbird 3: The Town is out now!</h3>
+                <h6 class="date">(August 31, 2026)</h6>
+                <p>The newest book in the Fatbird series has been released! Check out the preview below, and see the News page for more.</p>
+            </div>
+        </section>
+
+        <section id="preview" class="card">
+            <h2>Fatbird 3 Preview</h2>
+            <p>A sneak peek at the first pages of Fatbird 3: The Town.</p>
+            <div class="slideshow preview-slideshow">
+                <img id="preview-slide" src="fatbird3/cover.png" alt="Fatbird 3 preview">
+                <div class="counter" id="preview-counter">1 / 4</div>
+                <div class="controls">
+                        <button onclick="prevPreviewSlide()">◀</button>
+                        <button onclick="nextPreviewSlide()">▶</button>
+                </div>
+            </div>
         </section>
 
         <section id="fanart" class="card">
