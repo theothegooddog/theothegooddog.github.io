@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fatbird.org</title>
 
-    <link rel="stylesheet" href="nstyle.css">
+    <link rel="stylesheet" href="/fatbird.org/nstyle.css">
+    <script>
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("open");
+        }
+
+        function closeMenu() {
+            document.getElementById("nav-menu").classList.remove("open");
+        }
+    </script>
 </head>
 <body>
-    
-    <img src="a559022601b5419920431923e59b5ec6.jpg" style="
+
+    <img src="/fatbird.org/a559022601b5419920431923e59b5ec6.jpg" style="
     position: fixed;
     top: 0;
     left: 0;
@@ -18,16 +27,19 @@
     object-fit: cover;
     z-index: -1;
 ">
-    
+
     <header class="topbar">
         <div class="logo">fatbird.org</div>
 
-        <nav class="nav-buttons">
-            <button onclick="location.href='/fatbird.org'">Home</button>
-            <button onclick="location.href='#fanart'">Fanart</button>
-            <button onclick="location.href='#info'">Info</button>
-            <button onclick="location.href='#people'">People</button>
-            <button onclick="location.href='news'">News</button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">&#9776;</button>
+
+        <nav class="nav-buttons" id="nav-menu">
+            <button onclick="closeMenu(); location.href='/fatbird.org/'">Home</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#fanart'">Fanart</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#info'">Info</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#people'">People</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/news.html'">News</button>
+            <button onclick="closeMenu(); location.href='https://fatbird-shop.myshopify.com/'">Shop</button>
         </nav>
     </header>
 
@@ -38,12 +50,12 @@
         <section id="news">
             <div class="blog">
               <h3 class="title">Fatbird fanart is now on website!</h3>
-              <h6 class="date">(May 20, 2026)</h5>
+              <h6 class="date">(May 20, 2026)</h6>
               <p>All new Fatbird fanart has now been scanned and is free to access on the website!</p>
             </div>
             <div class="blog">
               <h3 class="title">Fatbird 2 unfinished booklet has been found!</h3>
-              <h6 class="date">(June 2, 2026)</h5>
+              <h6 class="date">(June 2, 2026)</h6>
               <p>The Fatbird 2 booklet, from early 2025 has been found! (Fatbird 1 is still lost to time.)</p>
             </div>
             <div class="blog">
@@ -51,6 +63,7 @@
               <h6 class="date">(August 31, 2026)</h5>
               <p>The newest book in the Fatbird series has been released! Fatbird escapes jail and heads to the big city. A preview of the first pages is up on the home page.</p>
             </div>
+        </section>
     </main>
 
 </body>

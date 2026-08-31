@@ -5,31 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fatbird.org</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/fatbird.org/style.css">
     <script>
         let current = 1;
         const total = 8;
-        
+
         function updateSlide() {
             document.getElementById("fanart-slide").src =
-                `fanart/fanart${current}.jpeg`;
-        
+                `/fatbird.org/fanart/fanart${current}.jpeg`;
+
             document.getElementById("fanart-counter").textContent =
                 `${current} / ${total}`;
         }
-        
+
         function showSlide(n) {
             if (n > total) current = 1;
             else if (n < 1) current = total;
             else current = n;
-        
+
             updateSlide();
         }
-        
+
         function nextSlide() {
             showSlide(current + 1);
         }
-        
+
         function prevSlide() {
             showSlide(current - 1);
         }
@@ -68,11 +68,22 @@
             updateSlide();
             updatePreviewSlide();
         });
+
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("open");
+        }
+
+        function closeMenu() {
+            document.getElementById("nav-menu").classList.remove("open");
+        }
+
+        // init
+        document.addEventListener("DOMContentLoaded", updateSlide);
     </script>
 </head>
 <body>
-    
-    <img src="a559022601b5419920431923e59b5ec6.jpg" style="
+
+    <img src="/fatbird.org/a559022601b5419920431923e59b5ec6.jpg" style="
     position: fixed;
     top: 0;
     left: 0;
@@ -81,7 +92,7 @@
     object-fit: cover;
     z-index: -1;
 ">
-    
+
     <header class="topbar">
         <div class="logo">fatbird.org</div>
 
@@ -93,6 +104,15 @@
             <button onclick="location.href='#people'">People</button>
             <button onclick="location.href='news'">News</button>
             <button onclick="location.href='https://fatbird-shop.myshopify.com/'">Shop</button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">&#9776;</button>
+
+        <nav class="nav-buttons" id="nav-menu">
+            <button onclick="closeMenu(); location.href='/fatbird.org/'">Home</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#fanart'">Fanart</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#info'">Info</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#people'">People</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/news.html'">News</button>
+            <button onclick="closeMenu(); location.href='https://fatbird-shop.myshopify.com/'">Shop</button>
         </nav>
     </header>
 
@@ -127,7 +147,7 @@
         <section id="fanart" class="card">
             <h2>Fanart</h2>
             <div class="slideshow">
-                <img id="fanart-slide" src="fanart/fanart1.jpeg" alt="Fanart">
+                <img id="fanart-slide" src="/fatbird.org/fanart/fanart1.jpeg" alt="Fanart">
                 <div class="counter" id="fanart-counter">1 / 8</div>
                 <div class="controls">
                         <button onclick="prevSlide()">◀</button>
@@ -149,27 +169,27 @@
                     <div class="name">Alexander</div>
                     <div class="role">Owner</div>
                 </div>
-            
+
                 <div class="person">
                     <div class="name">Theo</div>
                     <div class="role">CEO</div>
                 </div>
-            
+
                 <div class="person">
                     <div class="name">Marco</div>
                     <div class="role">Writer</div>
                 </div>
-            
+
                 <div class="person">
                     <div class="name">Brady</div>
                     <div class="role">Marketing Manager</div>
                 </div>
-            
+
                 <div class="person">
                     <div class="name">Raphael + Mr. Pumpkin Team</div>
                     <div class="role">Alliance</div>
                 </div>
-            
+
             </div>
         </section>
     </main>
