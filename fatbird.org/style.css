@@ -164,6 +164,29 @@ main {
     transform: rotate(90deg);
 }
 
+.preview-slideshow {
+    max-width: 450px;
+}
+
+.preview-slideshow img {
+    transform: none;
+}
+
+.news-item .title {
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.news-item .date {
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.news-item p {
+    color: var(--subtext);
+    font-size: 1.2rem;
+}
+
 .controls {
     margin-top: 10px;
     display: flex;
