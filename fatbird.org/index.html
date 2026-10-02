@@ -76,9 +76,6 @@
         function closeMenu() {
             document.getElementById("nav-menu").classList.remove("open");
         }
-
-        // init
-        document.addEventListener("DOMContentLoaded", updateSlide);
     </script>
 </head>
 <body>
@@ -96,18 +93,11 @@
     <header class="topbar">
         <div class="logo">fatbird.org</div>
 
-        <nav class="nav-buttons">
-            <button onclick="location.href='#'">Home</button>
-            <button onclick="location.href='#preview'">Fatbird 3</button>
-            <button onclick="location.href='#fanart'">Fanart</button>
-            <button onclick="location.href='#info'">Info</button>
-            <button onclick="location.href='#people'">People</button>
-            <button onclick="location.href='news'">News</button>
-            <button onclick="location.href='https://fatbird-shop.myshopify.com/'">Shop</button>
         <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">&#9776;</button>
 
         <nav class="nav-buttons" id="nav-menu">
             <button onclick="closeMenu(); location.href='/fatbird.org/'">Home</button>
+            <button onclick="closeMenu(); location.href='/fatbird.org/#preview'">Fatbird 3</button>
             <button onclick="closeMenu(); location.href='/fatbird.org/#fanart'">Fanart</button>
             <button onclick="closeMenu(); location.href='/fatbird.org/#info'">Info</button>
             <button onclick="closeMenu(); location.href='/fatbird.org/#people'">People</button>
