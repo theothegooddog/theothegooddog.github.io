@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RIM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e0e;
+    --panel: #171717;
+    --border: #2a2a2a;
+    --text: #e5e5e5;
+    --muted: #9a9a9a;
+    --accent: #7dd3fc;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    background: #0f172a;
+    padding: 12px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topbar h1 { color: white; font-size: 1.5rem; letter-spacing: 0.1em; }
+  .topbar a { color: var(--accent); text-decoration: none; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 48px 16px; }
+
+  .hero { text-align: center; margin-bottom: 48px; }
+  .hero h2 { font-size: 3rem; letter-spacing: 0.2em; }
+  .hero p { color: var(--muted); }
+
+  section { margin-bottom: 40px; }
+  section h3 { margin-bottom: 12px; font-size: 1.2rem; }
+  section p, section li { color: var(--muted); }
+  ul { padding-left: 20px; }
+
+  .cmd {
+    display: flex;
+    align-items: stretch;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+  }
+
+  .cmd pre {
+    flex: 1;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .cmd pre::before { content: "$ "; color: var(--accent); }
+
+  .cmd button {
+    border: none;
+    border-left: 1px solid var(--border);
+    background: #1f1f1f;
+    color: var(--text);
+    padding: 0 18px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  .cmd button:hover { background: #2a2a2a; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--panel);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--text);
+  }
+
+  .repo-link {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 20px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .repo-link:hover { background: rgba(125, 211, 252, 0.1); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>RIM</h1>
+  <a href="index.html">Home</a>
+</div>
+
+<main>
+  <div class="hero">
+    <h2>RIM</h2>
+    <p>A 3D OpenGL renderer written in C++ with GLFW, GLAD and GLM.</p>
+    <a class="repo-link" href="https://github.com/m-saliola/RIM">View on GitHub</a>
+  </div>
+
+  <section>
+    <h3>Clone &amp; build</h3>
+    <p>Paste this into a terminal. It clones the repo and runs <code>./build.sh</code>:</p>
+    <div class="cmd">
+      <pre id="build-cmd">git clone https://github.com/m-saliola/RIM.git &amp;&amp; cd RIM &amp;&amp; ./build.sh</pre>
+      <button data-copy="build-cmd">Copy</button>
+    </div>
+
+    <p>Then launch it from the <code>RIM</code> folder (it loads shaders and textures from <code>resources/</code>):</p>
+    <div class="cmd">
+      <pre id="run-cmd">./build/main</pre>
+      <button data-copy="run-cmd">Copy</button>
+    </div>
+  </section>
+
+  <section>
+    <h3>Requirements</h3>
+    <ul>
+      <li>A C++ compiler, <code>git</code> and <code>cmake</code> (3.10+)</li>
+      <li><strong>Linux:</strong> GLFW, OpenGL and X11 dev packages, e.g.<br>
+        <code>sudo apt install build-essential cmake libglfw3-dev libgl-dev libx11-dev</code></li>
+      <li><strong>macOS:</strong> <code>brew install cmake glfw</code></li>
+      <li><strong>Windows:</strong> GLFW is bundled in <code>lib/</code>; run <code>build.sh</code> from Git Bash with MinGW</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = document.getElementById(btn.dataset.copy).textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = "Copied!";
+        setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
